@@ -2,7 +2,6 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-
 import { createClient } from '@/utils/supabase/server'
 import { Provider } from '@supabase/supabase-js'
 import { getURL } from '@/utils/helper'
@@ -20,9 +19,7 @@ export async function emailLogin(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data)
 
   if (error) {
-    console.log('Login error:', error.message);
-    throw new Error(error.message);
-    // redirect('/login?message=Could not authenticate user')
+    redirect('/login?message=Could not authenticate user');
   }
 
   revalidatePath('/', 'layout')
@@ -42,12 +39,12 @@ export async function signup(formData: FormData) {
   const { error } = await supabase.auth.signUp(data)
 
   if (error) {
-    console.error('Sign up error:', error.message);
+    console.log(error)
     redirect('/login?message=Error signing up')
   }
 
   revalidatePath('/', 'layout')
-  redirect('/login')
+  redirect('/login?message=We sent you a sign-up email. Please check your inbox.')
 }
 
 export async function signOut() {
