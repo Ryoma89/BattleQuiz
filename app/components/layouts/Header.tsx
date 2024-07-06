@@ -14,13 +14,12 @@ const Header = async () => {
   } = await supabase.auth.getUser();
   return (
     <>
-    <header className="z-10 sticky top-0 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="z-10 sticky top-0 w-full bg-white border-b-2">
       <div className="container flex h-14 max-w-screen-2xl items-center">
         <nav className="flex items-center space-x-4 lg:space-x-6">
           <a className="mr-6 flex items-center space-x-2" href="/">
-            <Image src="/logo_transparent.png" alt="logo" width={100} height={100}></Image>
+            <Image src="/logo.png" alt="logo" width={100} height={56}></Image>
           </a>
-          <Link href="/home">Home</Link>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
         {user !== null ? (
@@ -30,13 +29,12 @@ const Header = async () => {
             </form>
           ) : (
             <Button asChild>
-              <Link href="/login">Sign In</Link>
+              <Link href="/login">Login</Link>
             </Button>
           )}
         </div>
       </div>
     </header>
-    <Separator />
     </>
   );
 };
