@@ -27,8 +27,19 @@ export async function GET(request: Request) {
         },
       }
     )
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
+      const { user } = data;
+      if (user) {
+        const { error: insertError } = await supabase
+          .from('Profiles')
+          .insert([{ user_id: user.id, email: user.email }]);
+
+        if (insertError) {
+          console.log('Error inserting user profile:', insertError);
+          return NextResponse.redirect(`${origin}/login?message=Error inserting user profile`);
+        }
+      }
       return NextResponse.redirect(`${origin}${next}`)
     }
   }
