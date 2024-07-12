@@ -1,4 +1,4 @@
-import { signOut } from "@/app/login/actions";
+import { signOut } from "@/app/(login)/login/actions";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { createClient } from "@/utils/supabase/server";
