@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import Header from "../components/layouts/Header";
 import { Toaster } from "@/components/ui/toaster";
+import SideBar from "../components/layouts/SideBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +19,18 @@ export default function LoginLayout({
 }>) {
   return (
     <>
-    <Header />
-    {children}
-    <Toaster />
+      <Header />
+      <div className="mt-[74px] md:flex">
+        <div className="hidden md:block md:w-[300px] md:border-r md:h-screen mt-5">
+          <div className="md:mx-auto md:max-w-[135px]">
+            <SideBar />
+          </div>
+        </div>
+        <div className="">
+          {children}
+          <Toaster />
+        </div>
+      </div>
     </>
   );
 }
