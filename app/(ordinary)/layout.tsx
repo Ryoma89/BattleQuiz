@@ -4,6 +4,7 @@ import "../globals.css";
 import Header from "../components/layouts/Header";
 import { Toaster } from "@/components/ui/toaster";
 import SideBar from "../components/layouts/SideBar";
+import Footer from "../components/layouts/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +21,16 @@ export default function LoginLayout({
   return (
     <>
       <Header />
-      <div className="mt-[74px] md:flex">
-        <div className="hidden md:block md:w-[300px] md:border-r md:h-screen mt-5">
+      <div className="mt-[74px] md:grid md:grid-cols-10">
+        <div className="hidden md:block md:border-r md:h-screen md:col-span-2">
           <div className="md:mx-auto md:max-w-[135px]">
             <SideBar />
           </div>
         </div>
-        <div className="">
+        <div className="md:col-span-8">
           {children}
           <Toaster />
+          <Footer />
         </div>
       </div>
     </>

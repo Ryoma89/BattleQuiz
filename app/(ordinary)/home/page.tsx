@@ -1,4 +1,4 @@
-import HomePageClient from '@/features/normal/home/HomePageClient';
+import HomePageClient from '@/features/ordinary/home/HomePageClient';
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation';
 import React from 'react'
