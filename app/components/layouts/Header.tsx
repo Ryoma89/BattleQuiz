@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import SideBar from "./SideBar";
+import { redirect } from "next/navigation";
 
 const Header = async () => {
   const supabase = await createClient();
@@ -21,6 +22,29 @@ const Header = async () => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  if(!user) {
+    return redirect('/login');
+  }
+
+  // プロフィール情報を取得
+  const { data: profile, error } = await supabase
+    .from('Profiles')
+    .select('*')
+    .eq('user_id', user.id)
+    .single();
+
+    if (error) {
+      console.error('Error fetching profile:', error);
+      return;
+    }
+
+    const profile_picture = profile?.profile_picture 
+    ? `https://udzrjscfqeecytpkwpgp.supabase.co/storage/v1/object/public/${profile.profile_picture}` 
+    : 'https://github.com/shadcn.png';
+    const username = profile?.username || 'User';
+  console.log(profile_picture);
+
   return (
     <div>
       <header className="z-10 sticky top-0 w-full bg-white border-b-2">
@@ -33,15 +57,19 @@ const Header = async () => {
 
           <div className="flex flex-1 items-center justify-end space-x-2">
             {user !== null ? (
-              <div className="flex items-center gap-2 mr-1">
-                <p className="hidden lg:flex">{user.email}</p>
+              <div className="flex items-center gap-2 mr-1 space-x-2">
+                {/* <p className="hidden lg:flex">{user.email}</p> */}
+                <p className="hidden lg:flex">Mr.{username}</p>
                 <Link href="/dashboard">
                   <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarImage src={profile_picture} />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                 </Link>
-                <form action={signOut} className="md:flex items-center gap-2 hidden">
+                <form
+                  action={signOut}
+                  className="md:flex items-center gap-2 hidden"
+                >
                   <Button>Sign Out</Button>
                 </form>
               </div>
@@ -58,8 +86,11 @@ const Header = async () => {
                 <SheetHeader>
                   <SheetTitle>Menu</SheetTitle>
                 </SheetHeader>
-                <SideBar/>
-                <form action={signOut} className="md:flex items-center gap-2 hidden">
+                <SideBar />
+                <form
+                  action={signOut}
+                  className="md:flex items-center gap-2 hidden"
+                >
                   <Button>Sign Out</Button>
                 </form>
               </SheetContent>

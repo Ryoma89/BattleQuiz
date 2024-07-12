@@ -15,7 +15,7 @@ const useProfileStore = create<StateType>((set) => ({
   Profile: {
     user_id: "",
     username: "",
-    email: "",
+    email: null,
     created_at: "",
     profile_picture: "",
     is_first_login: true,
