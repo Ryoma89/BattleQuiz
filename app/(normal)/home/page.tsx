@@ -29,9 +29,9 @@ const Homepage = async () => {
     return redirect('/setup-profile');
   }
   return (
-    <div>
+    <section>
       <HomePageClient />
-    </div>
+    </section>
   )
 }
 

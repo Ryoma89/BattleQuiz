@@ -1,10 +1,17 @@
 import React from 'react';
+import Hero from './hero/Hero';
+import LatestQuiz from './quiz/LatestQuiz';
+import PopularQuiz from './quiz/PopularQuiz';
+import CreateQuiz from './quiz/CreateQuiz';
 const HomePageClient = () => {
 
   return (
-    <div>
-      home
-    </div>
+    <>
+      <Hero />
+      <LatestQuiz />
+      <PopularQuiz />
+      <CreateQuiz />
+    </>
   );
 };
 
