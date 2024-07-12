@@ -67,7 +67,7 @@ export async function signup(formData: FormData) {
 
   revalidatePath("/", "layout");
   redirect(
-    "/login?message=We sent you a sign-up email. Please check your inbox."
+    "/home"
   );
 }
 
