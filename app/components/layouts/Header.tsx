@@ -15,6 +15,7 @@ import {
 import { Menu } from "lucide-react";
 import SideBar from "./SideBar";
 import { redirect } from "next/navigation";
+import SheetWrapper from "../elements/SheetWrapper";
 
 const Header = async () => {
   const supabase = await createClient();
@@ -39,9 +40,10 @@ const Header = async () => {
     return;
   }
 
-  const profile_picture = profile?.profile_picture
-    ? `https://udzrjscfqeecytpkwpgp.supabase.co/storage/v1/object/public/${profile.profile_picture}`
-    : "https://github.com/shadcn.png";
+  const profile_picture = profile.profile_picture
+    ? `https://udzrjscfqeecytpkwpgp.supabase.co/storage/v1/object/public/profile/${profile.profile_picture}`
+    : `https://udzrjscfqeecytpkwpgp.supabase.co/storage/v1/object/public/${profile.profile_picture}`;
+
   const username = profile?.username || "User";
 
   return (
@@ -58,7 +60,7 @@ const Header = async () => {
             {user !== null ? (
               <div className="flex items-center gap-2 mr-1 space-x-2">
                 {/* <p className="hidden lg:flex">{user.email}</p> */}
-                <p className="hidden lg:flex">Mr.{username}</p>
+                <p className="">Mr.{username}</p>
                 <Link href="/dashboard">
                   <Avatar>
                     <AvatarImage src={profile_picture} />
@@ -78,23 +80,7 @@ const Header = async () => {
               </Button>
             )}
             <div className="md:hidden">
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Menu className="w-6 h-6" />
-                </SheetTrigger>
-                <SheetContent>
-                  <SheetHeader>
-                    <SheetTitle>Menu</SheetTitle>
-                  </SheetHeader>
-                  <SideBar />
-                  <form
-                    action={signOut}
-                    className="md:flex items-center gap-2 hidden"
-                  >
-                    <Button>Sign Out</Button>
-                  </form>
-                </SheetContent>
-              </Sheet>
+              <SheetWrapper />
             </div>
           </div>
         </div>

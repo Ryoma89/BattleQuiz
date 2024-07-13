@@ -4,4 +4,6 @@ export type User = {
   email: string | undefined;
   profile_picture: string;
   created_at: string;
+  account_name: string;
+  introduce: string;
 };

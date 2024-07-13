@@ -19,6 +19,8 @@ const useProfileStore = create<StateType>((set) => ({
     created_at: "",
     profile_picture: "",
     is_first_login: true,
+    account_name: "",
+    introduce: "",
   },
   // プロフィールデータを更新する関数
   setProfile: (payload) => set({ Profile: payload }),
