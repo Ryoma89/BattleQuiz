@@ -18,30 +18,49 @@ import { supabase } from "@/lib/supabase";
 import useProfileStore from "@/store/profileStore";
 import { User } from "@/types/User";
 import { useRouter } from "next/navigation";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
   profile_picture: z.any(),
+  account_name: z.string().min(5).max(15).regex(/^@/, {
+    message: "Account name must start with @",
+  }),
+  introduce: z.string().max(140).optional(),
 });
 
 type Props = {
   user: User;
-}
+};
 
-const SetupForm = ({user}: Props) => {
-  console.log("user:", user);
+const SetupForm = ({ user }: Props) => {
   const { Profile, setProfile, fetchUserProfile } = useProfileStore();
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      account_name: "",
+      introduce: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("userID", user.user_id);
+    if (!values.account_name.startsWith('@')) {
+      values.account_name = `@${values.account_name}`
+    }
     try {
+      const { data: existingAccount, error: accountError } = await supabase.from("Profiles").select("*").eq("account_name", values.account_name);
+
+      if(existingAccount && existingAccount.length > 0) {
+        toast({
+          title: "Error",
+          description: "An account with this name already exists.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const file = values.profile_picture[0];
       const fileName = `${user.user_id}/${file.name}`;
       const { data: uploadData, error: uploadError } = await supabase.storage
@@ -53,7 +72,8 @@ const SetupForm = ({user}: Props) => {
       if (uploadError) {
         toast({
           title: "Error",
-          description: "An error occurred while uploading your profile picture.",
+          description:
+            "An error occurred while uploading your profile picture.",
           variant: "destructive",
         });
         return;
@@ -76,8 +96,10 @@ const SetupForm = ({user}: Props) => {
           username: values.username,
           profile_picture: filePath,
           is_first_login: false,
+          account_name: values.account_name,
+          introduce: values.introduce,
         })
-        .eq('user_id', user.user_id);
+        .eq("user_id", user.user_id);
 
       if (error) {
         toast({
@@ -99,8 +121,10 @@ const SetupForm = ({user}: Props) => {
           profile_picture: filePath,
           created_at: user.created_at,
           is_first_login: false,
+          account_name: values.account_name,
+          introduce: values.introduce || "",
         });
-        router.push('/home');
+        router.push("/home");
       }
     } catch (error) {
       toast({
@@ -126,6 +150,38 @@ const SetupForm = ({user}: Props) => {
               </FormControl>
               <FormDescription>
                 This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="account_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Account Name</FormLabel>
+              <FormControl>
+                <Input placeholder="@account_name" {...field} />
+              </FormControl>
+              <FormDescription>
+                This will be your unique account name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="introduce" // 新しいフィールド
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Introduce</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Introduce yourself" {...field} />
+              </FormControl>
+              <FormDescription>
+                Tell us a bit about yourself.
               </FormDescription>
               <FormMessage />
             </FormItem>
