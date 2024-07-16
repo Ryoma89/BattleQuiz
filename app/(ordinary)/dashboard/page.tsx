@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import Dashboard from "@/features/ordinary/dashboard/Dashboard";
+import Dashboard from "@/features/dashboard/Dashboard";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import React from "react";

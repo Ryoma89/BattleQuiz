@@ -15,10 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/lib/supabase";
-import useProfileStore from "@/store/profileStore";
 import { User } from "@/types/User";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
+import { useProfileStore } from "@/store/profileStore";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),

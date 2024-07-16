@@ -29,6 +29,7 @@ const Setup = async () => {
     profile_picture: user.user_metadata?.avatar_url || '/default.png',
     created_at: user.created_at,
     account_name: user.user_metadata?.account_name || '',
+    introduce: user.user_metadata?.introduce || '',
   }
   return (
     <div className="pt-10">
