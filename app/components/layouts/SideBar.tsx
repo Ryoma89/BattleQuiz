@@ -3,17 +3,17 @@ import { Button } from "@/components/ui/button";
 import {
   BookOpen,
   Building,
+  Edit,
   Home,
   LayoutDashboard,
   MessageSquare,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { signOut } from "@/app/(login)/login/actions";
 
 const SideBar = () => {
   return (
-    <section className="flex flex-col mt-3 md:fixed">
+    <section className="flex flex-col md:fixed mt-10 w-[230px]">
       <div className="flex items-center py-2">
         <Home className="w-5 h-5" />
         <Link href="/home" className="ml-2 lg:text-xl">
@@ -33,6 +33,12 @@ const SideBar = () => {
         </Link>
       </div>
       <div className="flex items-center py-2">
+        <Edit className="w-5 h-5" />
+        <Link href="/create-quiz" className="ml-2 lg:text-xl">
+          Create Quizzes
+        </Link>
+      </div>
+      <div className="flex items-center py-2">
         <MessageSquare className="w-5 h-5" />
         <Link href="/chat" className="ml-2 lg:text-xl">
           Chat
@@ -44,9 +50,6 @@ const SideBar = () => {
           Organizations
         </Link>
       </div>
-      <form action={signOut} className="flex items-center gap-2 md:hidden mt-5">
-        <Button className="w-full bg-red-500 hover:bg-red-700">Sign Out</Button>
-      </form>
     </section>
   );
 };

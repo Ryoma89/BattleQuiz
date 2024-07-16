@@ -1,9 +1,10 @@
-export type User = {
+export interface User {
   user_id: string;
-  username: string;
-  email: string | undefined;
-  profile_picture: string;
-  created_at: string;
-  account_name: string;
-  introduce: string;
-};
+  username: string | null;
+  email: string | null;
+  created_at: string | null;
+  profile_picture: string | null;
+  is_first_login: boolean | null; // このプロパティを追加
+  account_name: string | null;
+  introduce: string | null;
+}

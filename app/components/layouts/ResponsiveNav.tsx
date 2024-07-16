@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   BookOpen,
   Building,
+  Edit,
   Home,
   LayoutDashboard,
   MessageSquare,
@@ -30,6 +31,12 @@ const ResponsiveNav = ({ closeSheet }: { closeSheet: () => void }) => {
         <BookOpen className="w-5 h-5" />
         <Link href="/quiz-list" className="ml-2 lg:text-xl" onClick={closeSheet}>
           Quizzes
+        </Link>
+      </div>
+      <div className="flex items-center py-2">
+        <Edit className="w-5 h-5" />
+        <Link href="/create-quiz" className="ml-2 lg:text-xl" onClick={closeSheet}>
+          Create Quizzes
         </Link>
       </div>
       <div className="flex items-center py-2">

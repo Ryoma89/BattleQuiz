@@ -16,7 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Profiles } from "@/types/custom";
 import { supabase } from "@/lib/supabase";
 import { toast } from "@/components/ui/use-toast";
-import useProfileStore from "@/store/profileStore";
+import { useProfileStore } from "@/store/profileStore";
 
 const formSchema = z.object({
   username: z.string().min(1).max(50),

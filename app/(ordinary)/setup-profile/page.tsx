@@ -1,4 +1,4 @@
-import Setup from '@/features/ordinary/setup-profile/normal/setup-profile/Setup';
+import Setup from '@/features/setup-profile/normal/setup-profile/Setup';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import React from 'react';

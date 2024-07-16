@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import Header from "../components/layouts/Header";
 import { Toaster } from "@/components/ui/toaster";
 import SideBar from "../components/layouts/SideBar";
 import Footer from "../components/layouts/Footer";
+import QuizHeader from "../components/layouts/QuizHeader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +20,15 @@ export default function LoginLayout({
 }>) {
   return (
     <>
-      <Header />
+      <QuizHeader />
       <div className="mt-[74px] flex flex-col min-h-screen">
-        <div className="md:grid md:grid-cols-12 flex-1">
-          <div className="hidden md:block md:h-full md:col-span-3 md:border-r">
-            <div className="md:mx-auto md:max-w-[173px]">
+        <div className="lg:grid lg:grid-cols-[250px_1fr] flex-1">
+          <div className="hidden lg:block lg:h-full  lg:border-r">
+            <div className="lg:mx-auto lg:max-w-[173px]">
               <SideBar />
             </div>
           </div>
-          <div className="md:col-span-9">
+          <div className="lg:col-span-1">
             {children}
             <Toaster />
           </div>
