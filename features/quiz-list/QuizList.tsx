@@ -1,17 +1,53 @@
-import React, { useState } from "react";
+'use client';
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuCheckboxItem,
-} from "@/components/ui/dropdown-menu";
-import { FilterIcon, PlusIcon, SearchIcon } from "lucide-react";
 import QuizCard from "@/app/components/elements/QuizCard";
+import { fetchQuizzes } from "@/lib/fetch/fetchQuiz";
+import { Quiz } from "@/types/Quiz";
+import Pagination from "@/app/components/elements/Pagination";
+import { SearchIcon } from "lucide-react";
+import Dropdown from "@/app/components/elements/Dropdown";
+
 const QuizList = () => {
+  const itemsPerPage = 9;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [filteredQuizzes, setFilteredQuizzes] = useState<Quiz[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const quizData = await fetchQuizzes();
+      setQuizzes(quizData);
+      setFilteredQuizzes(quizData);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const filtered = quizzes.filter((quiz) => {
+      const matchesSearchTerm = quiz.title.toLowerCase().startsWith(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(quiz.category);
+      return matchesSearchTerm && matchesCategory;
+    });
+    setFilteredQuizzes(filtered);
+  }, [searchTerm, selectedCategories, quizzes]);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentQuizzes = filteredQuizzes.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(filteredQuizzes.length / itemsPerPage);
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((cat) => cat !== category)
+        : [...prev, category]
+    );
+  };
+
   return (
     <>
       <div className="md:flex md:items-center md:justify-between">
@@ -23,38 +59,26 @@ const QuizList = () => {
               type="search"
               placeholder="Search quizzes..."
               className="w-full rounded-lg bg-background pl-8 pr-4 py-2 text-sm max-w-52"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="h-9 gap-1">
-                <FilterIcon className="h-4 w-4" />
-                <span className="sr-only sm:not-sr-only">Filters</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem checked>All</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>General</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Math</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Geography</DropdownMenuCheckboxItem>
-              {/* 追加のカテゴリー... */}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Dropdown
+            selectedCategories={selectedCategories}
+            onCategoryChange={handleCategoryChange}
+          />
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 md:grid-cols-2 md:mt-10 lg:grid-cols-3">
-        <QuizCard />
-        <QuizCard />
-        <QuizCard />
-        <QuizCard />
-        <QuizCard />
-        <QuizCard />
-        <QuizCard />
-        <QuizCard />
-        <QuizCard />
+        {currentQuizzes.map((quiz) => (
+          <QuizCard key={quiz.quiz_id} quiz={quiz} />
+        ))}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(pageNumber) => setCurrentPage(pageNumber)}
+      />
     </>
   );
 };

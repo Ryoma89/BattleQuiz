@@ -11,15 +11,9 @@ const HomePageClient = ({ profileInfo }: { profileInfo: User }) => {
   const { Profile, setProfile } = useProfileStore();
 
   useEffect(() => {
-    console.log("Setting profileInfo in Zustand:", profileInfo);
     setProfile(profileInfo);
   }, [profileInfo, setProfile]);
 
-  useEffect(() => {
-    console.log("Profile in Zustand after set:", Profile);
-  }, [Profile]);
-
-  console.log("HomePageClient rendered");
 
   return (
     <>

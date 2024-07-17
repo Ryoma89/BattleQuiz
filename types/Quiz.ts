@@ -1,11 +1,10 @@
-export interface Quiz {
+export type Quiz = {
   quiz_id: number;
   title: string;
   description: string;
   category: string;
   created_by: string;
-  created_at: string;
-}
+};
 
 export interface Question {
   question_id: number;

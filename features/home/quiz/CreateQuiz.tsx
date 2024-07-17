@@ -10,7 +10,7 @@ const CreateQuiz = () => {
         <p className="text-muted-foreground">
           Unleash your creativity and share your knowledge with others.
         </p>
-        <Link href="/quiz/create">
+        <Link href="/create-quiz">
           <Button className="max-w-xs mt-5">Create a Quiz</Button>
         </Link>
       </div>

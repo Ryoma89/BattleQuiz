@@ -4,6 +4,7 @@ export const categories = [
   { value: "Reading", label: "Reading" },
   { value: "Idioms and Expressions", label: "Idioms and Expressions" },
   { value: "Translation", label: "Translation" },
+  { value: "English", label: "English" },
   { value: "Japanese", label: "Japanese" },
   { value: "Spanish", label: "Spanish" },
   { value: "French", label: "French" },

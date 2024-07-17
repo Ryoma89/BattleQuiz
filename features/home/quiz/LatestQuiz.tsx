@@ -1,9 +1,21 @@
 import QuizCard from "@/app/components/elements/QuizCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { fetchQuizzes } from "@/lib/fetch/fetchQuiz";
+import { Quiz } from "@/types/Quiz";
 
 const LatestQuiz = () => {
+  const [latestQuizzes, setLatestQuizzes] = useState<Quiz[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const quizData = await fetchQuizzes();
+      setLatestQuizzes(quizData.slice(0, 4));
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="py-12 md:py-16">
       <div className="container px-4 md:px-6">
@@ -18,10 +30,10 @@ const LatestQuiz = () => {
             <Button className="w-[150px]">View All</Button>
           </Link>
         </div>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <QuizCard />
-          <QuizCard />
-          <QuizCard />
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {latestQuizzes.map((quiz) => (
+            <QuizCard key={quiz.quiz_id} quiz={quiz} />
+          ))}
         </div>
       </div>
     </div>

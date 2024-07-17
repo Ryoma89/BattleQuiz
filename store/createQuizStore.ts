@@ -26,6 +26,7 @@ interface QuizState {
   clearQuestionToEdit: () => void;
   questionToEdit: Question | null;
   questionToEditIndex: number | null;
+  resetQuiz: () => void;
 }
 
 const useQuizStore = create<QuizState>((set) => ({
@@ -58,6 +59,7 @@ const useQuizStore = create<QuizState>((set) => ({
   })),
   questionToEdit: null,
   questionToEditIndex: null,
+  resetQuiz: () => set({ title: "", category: [], description: "", questions: [] }),
 }));
 
 export { useQuizStore };

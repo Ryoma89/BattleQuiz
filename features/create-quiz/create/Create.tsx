@@ -1,21 +1,28 @@
-'use client'
-import React, { useState } from "react";
+"use client";
+import React, { useState, useImperativeHandle, forwardRef } from "react";
 import QuizTitle from "./QuizTitle";
 import QuizContent from "./QuizContent";
 
 type QuizData = {
   title: string;
   category: string[];
-}
+};
 
-const Create = () => {
+const Create = forwardRef((props, ref) => {
   const [step, setStep] = useState(1);
-  const [quizData, setQuizData] = useState<QuizData>({title: "", category: []});
+  const [quizData, setQuizData] = useState<QuizData>({ title: "", category: [] });
 
-  const handleQuizTitleSubmit = (data: {title: string; category: string[]}) => {
+  useImperativeHandle(ref, () => ({
+    resetSteps() {
+      setStep(1);
+      setQuizData({ title: "", category: [] });
+    }
+  }));
+
+  const handleQuizTitleSubmit = (data: { title: string; category: string[] }) => {
     setQuizData(data);
     setStep(2);
-  }
+  };
 
   return (
     <>
@@ -26,7 +33,7 @@ const Create = () => {
         </>
       )}
     </>
-  )
-}
+  );
+});
 
 export default Create;
