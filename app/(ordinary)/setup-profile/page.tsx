@@ -28,7 +28,6 @@ const SetUpPage = async () => {
   }
 
   if (profile && !profile.is_first_login) {
-    // is_first_login が false の場合、ホームページにリダイレクト
     return redirect('/home');
   }
 

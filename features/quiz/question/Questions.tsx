@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
-import { useQuizStore } from '@/store/createQuizStore';
 
 interface QuestionsProps {
   quizId: string;

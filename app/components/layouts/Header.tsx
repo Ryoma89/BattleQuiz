@@ -3,17 +3,8 @@ import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
-import SideBar from "./SideBar";
 import { redirect } from "next/navigation";
 import SheetWrapper from "../elements/SheetWrapper";
 
@@ -58,7 +49,6 @@ const Header = async () => {
           <div className="flex flex-1 items-center justify-end space-x-2">
             {user !== null ? (
               <div className="flex items-center gap-2 mr-1 space-x-2">
-                {/* <p className="hidden lg:flex">{user.email}</p> */}
                 <p className="">Mr.{username}</p>
                 <Link href="/dashboard">
                   <Avatar>

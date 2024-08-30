@@ -32,7 +32,6 @@ const QuizPage: React.FC<QuizPageProps> = async ({ params }) => {
     console.error('Error fetching profile:', error);
     return;
   }
-  // console.log("profile", profile);
   return (
     <section>
       <QuizDetail id={id} profile={profile}/>

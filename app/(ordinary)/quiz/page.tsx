@@ -20,8 +20,6 @@ const QuizListPage = async () => {
     .eq('user_id', user.id)
     .single();
 
-  // console.log('Profile data:', profileInfo);
-
   if (profileError) {
     console.error('Error fetching profile:', profileError);
     return;

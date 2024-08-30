@@ -65,7 +65,7 @@ export async function signup(formData: FormData) {
   if (user) {
     const profileData = {
       user_id: user.id,
-      email: user.email as string | null, // Ensure this matches the expected type (string | null)
+      email: user.email ?? '', // Ensure this matches the expected type (string | null)
       // Add other fields as required by your "Profiles" table schema
     };
 

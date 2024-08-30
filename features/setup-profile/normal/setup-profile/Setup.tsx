@@ -25,7 +25,7 @@ const Setup = async () => {
   const plainUser: User = {
     user_id: user.id,
     username: user.user_metadata?.full_name || '',
-    email: user.email || null,
+    email: user.email || '',
     profile_picture: user.user_metadata?.avatar_url || '/default.png',
     created_at: user.created_at,
     account_name: user.user_metadata?.account_name || '',
