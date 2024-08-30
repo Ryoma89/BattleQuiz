@@ -43,35 +43,31 @@ const QuizHeader = async () => {
         <div className="container flex h-16 max-w-screen-2xl items-center">
           <nav className="flex items-center space-x-4 lg:space-x-6">
             <a className="mr-6 flex items-center space-x-2" href="/">
-              <Image src="/logo.png" alt="logo" width={100} height={56} priority style={{ width: 'auto', height: 'auto' }}></Image>
+              <Image
+                src="/logo.png"
+                alt="logo"
+                width={100}
+                height={56}
+                priority
+                style={{ width: "auto", height: "auto" }}
+              ></Image>
             </a>
           </nav>
 
           <div className="flex flex-1 items-center justify-end space-x-2">
-            {user !== null ? (
-              <div className="flex items-center gap-2 mr-1 space-x-2">
-                {/* <p className="hidden lg:flex">{user.email}</p> */}
-                <p className="">Mr.{username}</p>
-                <Link href="/dashboard">
-                  <Avatar>
-                    <AvatarImage src={profile_picture} />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                </Link>
-                <form
-                  action={signOut}
-                  className="md:flex items-center gap-2 hidden"
-                >
-                  <Button>Sign Out</Button>
-                </form>
-              </div>
-            ) : (
-              <Button asChild>
-                <Link href="/login">Login</Link>
-              </Button>
-            )}
-            <div className="block">
-              <SheetWrapper />
+            <div className="flex items-center gap-2 mr-1 space-x-2">
+              <p className="">Mr.{username}</p>
+              <Link href="/dashboard">
+                <Avatar>
+                  <AvatarImage src={profile_picture} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </Link>
+              <form
+                className="flex items-center gap-2"
+              >
+                <Button className="bg-red-600 hover:bg-red-400">Exit Quiz</Button>
+              </form>
             </div>
           </div>
         </div>

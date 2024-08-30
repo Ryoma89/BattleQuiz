@@ -9,8 +9,8 @@ import { getURL } from "@/utils/helper";
 export async function emailLogin(formData: FormData) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
+  // Type-casting here for convenience
+  // In practice, you should validate your inputs
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
@@ -30,11 +30,19 @@ export async function emailLogin(formData: FormData) {
 export async function signup(formData: FormData) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
+  // Type-casting here for convenience
+  // In practice, you should validate your inputs
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  // Ensure email and password are not undefined
+  if (!email || !password) {
+    return redirect("/signup?message=Email and password are required");
+  }
+
   const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
+    email: email as string,
+    password: password as string,
   };
 
   const redirectUrl = getURL("/home");
@@ -55,20 +63,24 @@ export async function signup(formData: FormData) {
   const user = signUpData.user;
 
   if (user) {
-    const {data: insertData, error: insertError} = await supabase
-      .from("Profiles")
-      .insert([{ user_id: user.id, email: user.email }]);
+    const profileData = {
+      user_id: user.id,
+      email: user.email as string | null, // Ensure this matches the expected type (string | null)
+      // Add other fields as required by your "Profiles" table schema
+    };
 
-      if (insertError) {
-        console.log('Error inserting user profile:', insertError);
-        return redirect('/login?message=Error inserting user profile');
-      }
+    const { data: insertData, error: insertError } = await supabase
+      .from("Profiles")
+      .insert([profileData]);
+
+    if (insertError) {
+      console.log('Error inserting user profile:', insertError);
+      return redirect('/login?message=Error inserting user profile');
+    }
   }
 
   revalidatePath("/", "layout");
-  redirect(
-    "/home"
-  );
+  redirect("/home");
 }
 
 export async function signOut() {

@@ -1,16 +1,18 @@
+'use client'
 import QuizCard from "@/app/components/elements/QuizCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { fetchQuizzes } from "@/lib/fetch/fetchQuiz";
 import { Quiz } from "@/types/Quiz";
+import { User } from "@/types/User";
 
-const LatestQuiz = () => {
+const LatestQuiz = ({ user }: { user: User }) => {
   const [latestQuizzes, setLatestQuizzes] = useState<Quiz[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const quizData = await fetchQuizzes();
+      const quizData = await fetchQuizzes('latest');
       setLatestQuizzes(quizData.slice(0, 4));
     };
     fetchData();
@@ -32,7 +34,7 @@ const LatestQuiz = () => {
         </div>
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {latestQuizzes.map((quiz) => (
-            <QuizCard key={quiz.quiz_id} quiz={quiz} />
+            <QuizCard key={quiz.quiz_id} quiz={quiz} user={user} />
           ))}
         </div>
       </div>

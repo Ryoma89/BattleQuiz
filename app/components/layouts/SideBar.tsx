@@ -21,14 +21,8 @@ const SideBar = () => {
         </Link>
       </div>
       <div className="flex items-center py-2">
-        <LayoutDashboard className="w-5 h-5" />
-        <Link href="/dashboard" className="ml-2 lg:text-xl">
-          Dashboard
-        </Link>
-      </div>
-      <div className="flex items-center py-2">
         <BookOpen className="w-5 h-5" />
-        <Link href="/quiz-list" className="ml-2 lg:text-xl">
+        <Link href="/quiz" className="ml-2 lg:text-xl">
           Quizzes
         </Link>
       </div>
@@ -39,15 +33,9 @@ const SideBar = () => {
         </Link>
       </div>
       <div className="flex items-center py-2">
-        <MessageSquare className="w-5 h-5" />
-        <Link href="/chat" className="ml-2 lg:text-xl">
-          Chat
-        </Link>
-      </div>
-      <div className="flex items-center py-2">
-        <Building className="w-5 h-5" />
-        <Link href="/organizations" className="ml-2 lg:text-xl">
-          Organizations
+        <LayoutDashboard className="w-5 h-5" />
+        <Link href="/dashboard" className="ml-2 lg:text-xl">
+          Profile
         </Link>
       </div>
     </section>

@@ -5,8 +5,8 @@ const baseSchema = {
   questionType: z.enum(["4 answers", "2 answers", "Type answer"]),
   timeLimit: z
     .number()
-    .min(5)
-    .max(60, "Time limit must be between 5 and 60 seconds"),
+    .min(30)
+    .max(300, "Time limit must be between 30 and 300 seconds"),
   correctAnswer: z.array(z.string()),
 };
 

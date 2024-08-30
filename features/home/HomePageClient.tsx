@@ -1,25 +1,20 @@
 'use client'
-import React, { useEffect } from 'react';
+import React from 'react';
 import Hero from './hero/Hero';
+import CreateQuiz from './quiz/CreateQuiz';
+import { User } from '@/types/User';
+import dynamic from 'next/dynamic';
 import LatestQuiz from './quiz/LatestQuiz';
 import PopularQuiz from './quiz/PopularQuiz';
-import CreateQuiz from './quiz/CreateQuiz';
-import { useProfileStore } from '@/store/profileStore';
-import { User } from '@/types/User';
 
 const HomePageClient = ({ profileInfo }: { profileInfo: User }) => {
-  const { Profile, setProfile } = useProfileStore();
-
-  useEffect(() => {
-    setProfile(profileInfo);
-  }, [profileInfo, setProfile]);
-
+  // console.log("profileInfo", profileInfo);
 
   return (
     <>
       <Hero />
-      <LatestQuiz />
-      <PopularQuiz />
+      <LatestQuiz user={profileInfo}/>
+      <PopularQuiz user={profileInfo}/>
       <CreateQuiz />
     </>
   );

@@ -46,7 +46,7 @@ const QuizContent: React.FC<QuizContentProps> = ({ quizData }) => {
     defaultValues: {
       question: "",
       questionType: "4 answers",
-      timeLimit: 5,
+      timeLimit: 30,
       answer1: "",
       answer2: "",
       answer3: "",
@@ -99,11 +99,13 @@ const QuizContent: React.FC<QuizContentProps> = ({ quizData }) => {
                     <Checkbox
                       checked={field.value.includes("answer1")}
                       onCheckedChange={(checked) => {
+                        let newValue: string[];
                         if (checked) {
-                          field.onChange([...field.value, "answer1"]);
+                          newValue = [...field.value, "answer1"];
                         } else {
-                          field.onChange(field.value.filter((v) => v !== "answer1"));
+                          newValue = field.value.filter((v: string) => v !== "answer1");
                         }
+                        field.onChange(newValue);
                       }}
                     />
                   )}/>
@@ -122,11 +124,13 @@ const QuizContent: React.FC<QuizContentProps> = ({ quizData }) => {
                     <Checkbox
                       checked={field.value.includes("answer2")}
                       onCheckedChange={(checked) => {
+                        let newValue: string[];
                         if (checked) {
-                          field.onChange([...field.value, "answer2"]);
+                          newValue = [...field.value, "answer2"];
                         } else {
-                          field.onChange(field.value.filter((v) => v !== "answer2"));
+                          newValue = field.value.filter((v: string) => v !== "answer2");
                         }
+                        field.onChange(newValue);
                       }}
                     />
                   )}/>
@@ -145,11 +149,13 @@ const QuizContent: React.FC<QuizContentProps> = ({ quizData }) => {
                     <Checkbox
                       checked={field.value.includes("answer3")}
                       onCheckedChange={(checked) => {
+                        let newValue: string[];
                         if (checked) {
-                          field.onChange([...field.value, "answer3"]);
+                          newValue = [...field.value, "answer3"];
                         } else {
-                          field.onChange(field.value.filter((v) => v !== "answer3"));
+                          newValue = field.value.filter((v: string) => v !== "answer3");
                         }
+                        field.onChange(newValue);
                       }}
                     />
                   )}/>
@@ -168,11 +174,13 @@ const QuizContent: React.FC<QuizContentProps> = ({ quizData }) => {
                     <Checkbox
                       checked={field.value.includes("answer4")}
                       onCheckedChange={(checked) => {
+                        let newValue: string[];
                         if (checked) {
-                          field.onChange([...field.value, "answer4"]);
+                          newValue = [...field.value, "answer4"];
                         } else {
-                          field.onChange(field.value.filter((v) => v !== "answer4"));
+                          newValue = field.value.filter((v: string) => v !== "answer4");
                         }
+                        field.onChange(newValue);
                       }}
                     />
                   )}/>
@@ -196,11 +204,13 @@ const QuizContent: React.FC<QuizContentProps> = ({ quizData }) => {
                     <Checkbox
                       checked={field.value.includes("True")}
                       onCheckedChange={(checked) => {
+                        let newValue: string[];
                         if (checked) {
-                          field.onChange(["True"]);
+                          newValue = ["True"];
                         } else {
-                          field.onChange([]);
+                          newValue = [];
                         }
+                        field.onChange(newValue);
                       }}
                     />
                   )}/>
@@ -214,11 +224,13 @@ const QuizContent: React.FC<QuizContentProps> = ({ quizData }) => {
                     <Checkbox
                       checked={field.value.includes("False")}
                       onCheckedChange={(checked) => {
+                        let newValue: string[];
                         if (checked) {
-                          field.onChange(["False"]);
+                          newValue = ["False"];
                         } else {
-                          field.onChange([]);
+                          newValue = [];
                         }
+                        field.onChange(newValue);
                       }}
                     />
                   )}/>
@@ -229,7 +241,7 @@ const QuizContent: React.FC<QuizContentProps> = ({ quizData }) => {
             </div>
           </>
         );
-
+  
       case "Type answer":
         return (
           <FormField control={form.control} name="answer1" render={({ field }) => (
@@ -246,8 +258,9 @@ const QuizContent: React.FC<QuizContentProps> = ({ quizData }) => {
         return null;
     }
   };
+  
 
-  const timeLimits = Array.from({ length: 12 }, (_, i) => (i + 1) * 5);
+  const timeLimits = Array.from({ length: 10 }, (_, i) => (i + 1) * 30);
 
   return (
     <div className="flex flex-col gap-6">

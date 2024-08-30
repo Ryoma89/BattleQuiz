@@ -1,17 +1,28 @@
+'use client'
 import QuizCard from "@/app/components/elements/QuizCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { fetchQuizzes } from "@/lib/fetch/fetchQuiz";
 import { Quiz } from "@/types/Quiz";
+import { User } from '@/types/User';
 
-const PopularQuiz = () => {
+const PopularQuiz = ({ user }: { user: User }) => {
   const [popularQuizzes, setPopularQuizzes] = useState<Quiz[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const quizData = await fetchQuizzes();
-      setPopularQuizzes(quizData.slice(0, 4));
+      try {
+        const quizData = await fetchQuizzes('popular');
+        if (quizData.length === 0) {
+          setError("No popular quizzes found.");
+        } else {
+          setPopularQuizzes(quizData.slice(0, 4));
+        }
+      } catch (err) {
+        setError("Failed to fetch popular quizzes.");
+      }
     };
     fetchData();
   }, []);
@@ -30,11 +41,15 @@ const PopularQuiz = () => {
             <Button className="w-[150px]">View All</Button>
           </Link>
         </div>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {popularQuizzes.map((quiz) => (
-            <QuizCard key={quiz.quiz_id} quiz={quiz} />
-          ))}
-        </div>
+        {error ? (
+          <p className="text-red-500">{error}</p>
+        ) : (
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {popularQuizzes.map((quiz) => (
+              <QuizCard key={quiz.quiz_id} quiz={quiz} user={user} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

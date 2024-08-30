@@ -1,7 +1,7 @@
 export interface User {
   user_id: string;
   username: string | null;
-  email: string | null;
+  email: string;
   created_at: string | null;
   profile_picture: string | null;
   is_first_login: boolean | null;
@@ -10,6 +10,7 @@ export interface User {
 }
 
 export type CardUser = {
+  user_id: string;
   username: string;
   profile_picture: string;
 };

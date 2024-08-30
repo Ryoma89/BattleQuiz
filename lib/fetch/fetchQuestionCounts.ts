@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
 
-export const fetchQuestionCount = async (quizId: number): Promise<number | null> => {
+export const fetchQuestionCount = async (quizId: string): Promise<number | null> => {
   const { count, error: questionCountError } = await supabase
     .from("question")
     .select("question_id", { count: "exact" })

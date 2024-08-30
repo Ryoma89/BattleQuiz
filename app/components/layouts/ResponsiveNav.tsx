@@ -22,14 +22,8 @@ const ResponsiveNav = ({ closeSheet }: { closeSheet: () => void }) => {
         </Link>
       </div>
       <div className="flex items-center py-2">
-        <LayoutDashboard className="w-5 h-5" />
-        <Link href="/dashboard" className="ml-2 lg:text-xl" onClick={closeSheet}>
-          Dashboard
-        </Link>
-      </div>
-      <div className="flex items-center py-2">
         <BookOpen className="w-5 h-5" />
-        <Link href="/quiz-list" className="ml-2 lg:text-xl" onClick={closeSheet}>
+        <Link href="/quiz" className="ml-2 lg:text-xl" onClick={closeSheet}>
           Quizzes
         </Link>
       </div>
@@ -40,15 +34,9 @@ const ResponsiveNav = ({ closeSheet }: { closeSheet: () => void }) => {
         </Link>
       </div>
       <div className="flex items-center py-2">
-        <MessageSquare className="w-5 h-5" />
-        <Link href="/chat" className="ml-2 lg:text-xl" onClick={closeSheet}>
-          Chat
-        </Link>
-      </div>
-      <div className="flex items-center py-2">
-        <Building className="w-5 h-5" />
-        <Link href="/organizations" className="ml-2 lg:text-xl" onClick={closeSheet}>
-          Organizations
+        <LayoutDashboard className="w-5 h-5" />
+        <Link href="/dashboard" className="ml-2 lg:text-xl">
+          Profile
         </Link>
       </div>
       <form action={signOut} className="flex items-center gap-2 md:hidden mt-5">

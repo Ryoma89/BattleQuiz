@@ -15,6 +15,7 @@ CREATE TABLE Question (
     quiz_id UUID REFERENCES Quiz(quiz_id),
     question_text TEXT NOT NULL,
     question_type VARCHAR(50),
+    time_limit INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -49,3 +50,6 @@ CREATE TABLE UserAnswer (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+--useranswerテーブルの作成
+-- user_answer_id,user_quiz_id,question_id,selected_option_id

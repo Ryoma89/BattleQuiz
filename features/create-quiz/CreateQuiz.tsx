@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useEffect, useRef } from "react";
 import Create from "./create/Create";
 import QuestionsList from "./questions/QuestionsList";
@@ -19,13 +19,13 @@ const CreateQuiz = ({ profile }: { profile: User }) => {
   }, [profile, setProfile]);
 
   const handleCreateQuiz = async () => {
+
     if (!Profile) {
       console.log("no profile");
       return;
     }
 
     const userId = Profile.user_id;
-    console.log("userId", userId);
     try {
       const { data: quizData, error: quizError } = await supabase
         .from("quiz")
@@ -50,8 +50,6 @@ const CreateQuiz = ({ profile }: { profile: User }) => {
       }
 
       const quizId = quizData[0].quiz_id;
-      console.log("QuizData", quizData);
-      console.log("QuizData quiz_id", quizId);
 
       if (!quizId) {
         throw new Error("Error creating quiz: quiz_id is null");
@@ -65,6 +63,7 @@ const CreateQuiz = ({ profile }: { profile: User }) => {
               quiz_id: quizId,
               question_text: question.question,
               question_type: question.questionType,
+              time_limit: question.timeLimit,
             },
           ])
           .select();
@@ -81,23 +80,50 @@ const CreateQuiz = ({ profile }: { profile: User }) => {
 
         const questionId = questionData[0].question_id;
 
-        const options = [
+        let options = [
           {
-            option_text: question.answer1, is_correct: question.correctAnswer.includes(question.answer1)
+            option_text: question.answer1,
+            is_correct: question.correctAnswer.includes("answer1"),
           },
           {
-            option_text: question.answer2, is_correct: question.correctAnswer.includes(question.answer2)
+            option_text: question.answer2,
+            is_correct: question.correctAnswer.includes("answer2"),
           },
-          question.answer3 && { option_text: question.answer3, is_correct: question.correctAnswer.includes(question.answer3) },
-          question.answer4 && { option_text: question.answer4, is_correct: question.correctAnswer.includes(question.answer4) },
+          question.answer3 && {
+            option_text: question.answer3,
+            is_correct: question.correctAnswer.includes("answer3"),
+          },
+          question.answer4 && {
+            option_text: question.answer4,
+            is_correct: question.correctAnswer.includes("answer4"),
+          },
         ].filter(Boolean) as { option_text: string; is_correct: boolean }[];
 
+        if (question.questionType === "2 answers") {
+          options = [
+            { option_text: "True", is_correct: question.correctAnswer.includes("True") },
+            { option_text: "False", is_correct: question.correctAnswer.includes("False") },
+          ];
+        }
+
+        if (question.questionType === "Type answer") {
+          options = [{
+            option_text: question.answer1,
+            is_correct: true,
+          }];
+        }
+
         for (const option of options) {
-          const { error: optionError } = await supabase.from('answeroption').insert([{
-            question_id: questionId,
-            option_text: option.option_text,
-            is_correct: option.is_correct
-          }]).select();
+          const { error: optionError } = await supabase
+            .from("answeroption")
+            .insert([
+              {
+                question_id: questionId,
+                option_text: option.option_text,
+                is_correct: option.is_correct,
+              },
+            ])
+            .select();
 
           if (optionError) {
             console.error("Option insertion error:", optionError);
@@ -106,14 +132,14 @@ const CreateQuiz = ({ profile }: { profile: User }) => {
         }
       }
 
+      resetQuiz();
+      createRef.current?.resetSteps();
       toast({
         title: "✅ Success!!",
         description: "Quiz has been successfully submitted.",
       });
-      resetQuiz();
-      createRef.current?.resetSteps();
     } catch (error) {
-      console.error('Error creating quiz:', error);
+      console.error("Error creating quiz:", error);
       toast({
         title: "Error",
         description: "An error occurred while saving your quiz data.",

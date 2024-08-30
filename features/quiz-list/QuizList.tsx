@@ -7,8 +7,9 @@ import { Quiz } from "@/types/Quiz";
 import Pagination from "@/app/components/elements/Pagination";
 import { SearchIcon } from "lucide-react";
 import Dropdown from "@/app/components/elements/Dropdown";
+import { User } from "@/types/User";
 
-const QuizList = () => {
+const QuizList = ({ profileInfo }: { profileInfo: User }) => {
   const itemsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
@@ -18,7 +19,9 @@ const QuizList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const quizData = await fetchQuizzes();
+      setQuizzes([]);
+      setFilteredQuizzes([]);
+      const quizData = await fetchQuizzes('popular');
       setQuizzes(quizData);
       setFilteredQuizzes(quizData);
     };
@@ -71,7 +74,7 @@ const QuizList = () => {
       </div>
       <div className="grid grid-cols-1 gap-4 mt-5 sm:grid-cols-2 md:grid-cols-2 md:mt-10 lg:grid-cols-3">
         {currentQuizzes.map((quiz) => (
-          <QuizCard key={quiz.quiz_id} quiz={quiz} />
+          <QuizCard key={quiz.quiz_id} quiz={quiz} user={profileInfo}/>
         ))}
       </div>
       <Pagination

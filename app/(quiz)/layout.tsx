@@ -21,19 +21,9 @@ export default function LoginLayout({
   return (
     <>
       <QuizHeader />
-      <div className="mt-[74px] flex flex-col min-h-screen">
-        <div className="lg:grid lg:grid-cols-[250px_1fr] flex-1">
-          <div className="hidden lg:block lg:h-full  lg:border-r">
-            <div className="lg:mx-auto lg:max-w-[173px]">
-              <SideBar />
-            </div>
-          </div>
-          <div className="lg:col-span-1">
-            {children}
-            <Toaster />
-          </div>
-        </div>
-        <Footer />
+      <div className="mt-[74px] flex flex-col overflow-none" style={{ minHeight: 'calc(100vh - 148px)' }}>
+          {children}
+          <Toaster />
       </div>
     </>
   );

@@ -55,7 +55,6 @@ const Header = async () => {
               <Image src="/logo.png" alt="logo" width={100} height={56} priority style={{ width: 'auto', height: 'auto' }}></Image>
             </a>
           </nav>
-
           <div className="flex flex-1 items-center justify-end space-x-2">
             {user !== null ? (
               <div className="flex items-center gap-2 mr-1 space-x-2">

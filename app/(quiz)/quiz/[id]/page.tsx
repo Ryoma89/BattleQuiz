@@ -1,9 +1,16 @@
-import CreateQuiz from '@/features/create-quiz/CreateQuiz'
+import QuizDetail from '@/features/quiz/detail/QuizDetail'
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import React from 'react'
 
-const CreateQuizPage = async () => {
+interface QuizPageProps {
+  params: {
+    id: string;
+  };
+}
+
+const QuizPage: React.FC<QuizPageProps> = async ({ params }) => {
+  const { id } = params;
   const supabase = await createClient();
 
   const {
@@ -25,12 +32,12 @@ const CreateQuizPage = async () => {
     console.error('Error fetching profile:', error);
     return;
   }
-
+  // console.log("profile", profile);
   return (
-    <div className='h-full p-5 md:py-10 md:px-8'>
-      <CreateQuiz profile={profile}/>
-    </div>
+    <section>
+      <QuizDetail id={id} profile={profile}/>
+    </section>
   )
 }
 
-export default CreateQuizPage
+export default QuizPage
